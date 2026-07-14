@@ -1,10 +1,13 @@
-# Lista della spesa - Progetto Flutter
+# Lista Spesa - Progetto Flutter
 
 App mobile per gestire la lista della spesa, sviluppata in Flutter/Dart
 con database locale SQLite (tramite il pacchetto `sqflite`).
 
+Repository: https://github.com/Bianca-T40/lista_spesa
+
 ## Struttura dei file
 
+```
 lib/
 ├── main.dart                      → avvio app (solo runApp)
 ├── app.dart                       → MaterialApp, tema, titolo
@@ -20,35 +23,55 @@ lib/
     ├── add_item_dialog.dart       → dialog per aggiungere un articolo
     └── shopping_list_tile.dart    → singola riga della lista
 
+assets/
+└── icon/
+    └── icon.png                   → sorgente dell'icona dell'app (1024x1024)
+```
 
 ## Come avviarlo da zero
 
-1. Crea un nuovo progetto Flutter (se non l'hai già fatto):
+1. Clona il repository (o scarica lo ZIP da GitHub):
    ```
-   flutter create lista_spesa
+   git clone https://github.com/Bianca-T40/lista_spesa.git
    ```
-2. Dentro `lib/`, crea le sottocartelle `models`, `services`, `constants`,
-   `screens`, `widgets` e copia ogni file al posto giusto, rispettando
-   esattamente i nomi (servono per gli `import` tra i file).
-3. Apri `pubspec.yaml` e aggiungi sotto `dependencies:` (allineato con
-   `flutter:`, non con `sdk:`):
-   ```yaml
-   dependencies:
-     flutter:
-       sdk: flutter
-     sqflite: ^2.3.0
-     path: ^1.9.0
-   ```
-4. Installa le dipendenze:
+2. Installa le dipendenze:
    ```
    flutter pub get
    ```
-5. Avvia l'app su un emulatore o dispositivo (F5 in VS Code, oppure):
+3. Avvia l'app su un emulatore o dispositivo (F5 in VS Code, oppure):
    ```
    flutter run
    ```
 
-## Perché questa struttura
+Se hai scaricato/clonato il progetto su un PC diverso da quello originale,
+lancia anche `flutter clean` prima di `flutter pub get`, per evitare
+problemi di cache tra macchine diverse.
+
+## Icona e nome dell'app
+
+L'app si chiama **Lista Spesa** e ha un'icona personalizzata (carrello con
+frutta e verdura), generata a partire da un'unica immagine sorgente tramite
+il pacchetto `flutter_launcher_icons`.
+
+- Immagine sorgente: `assets/icon/icon.png`
+- Configurazione in `pubspec.yaml`:
+  ```yaml
+  dev_dependencies:
+    flutter_launcher_icons: ^0.13.1
+
+  flutter_launcher_icons:
+    android: true
+    ios: true
+    image_path: "assets/icon/icon.png"
+  ```
+- Comando per rigenerare le icone dopo aver cambiato l'immagine sorgente:
+  ```
+  dart run flutter_launcher_icons
+  ```
+- Il nome visibile sotto l'icona si cambia in
+  `android/app/src/main/AndroidManifest.xml`, proprietà `android:label`.
+
+## Perché questa struttura del codice
 
 Ogni file ha UNA responsabilità sola:
 - `item.dart` → solo il modello dati, nessuna logica
@@ -73,6 +96,9 @@ seguendo questo stesso ordine (modello → database → costanti → UI).
   al primo avvio, non serve fare nulla a mano.
 - Ogni dispositivo (telefono, emulatore) ha il proprio database locale,
   separato dagli altri: i dati non si sincronizzano automaticamente.
+- Dopo aver cambiato icona o nome, conviene rilanciare `flutter clean`
+  prima di reinstallare l'app, altrimenti il launcher del telefono a
+  volte mantiene in cache l'icona/nome precedenti.
 
 ## Funzionalità già implementate
 
@@ -81,6 +107,7 @@ seguendo questo stesso ordine (modello → database → costanti → UI).
 - Eliminare un articolo con swipe laterale
 - Contatore "X di Y comprati" aggiornato in tempo reale
 - Pallino colorato per ogni categoria
+- Icona e nome dell'app personalizzati
 
 ## Idee per rifiniture future, se hai tempo
 
